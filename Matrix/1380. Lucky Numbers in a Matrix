@@ -1,0 +1,41 @@
+//Given an m x n matrix of distinct numbers, return all lucky numbers in the matrix in any order.
+
+//A lucky number is an element of the matrix such that it is the minimum element in its row and maximum in its column.
+
+//Easy
+
+class Solution {
+public:
+    vector<int> luckyNumbers (vector<vector<int>>& matrix) {
+        int row = matrix.size();
+        int cols = matrix[0].size();
+        vector<int> minn(row, INT_MAX);
+        vector<int> maxx(cols, 0);
+        
+        // Find the minimum values in each row
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < cols; j++){
+                minn[i] = min(minn[i], matrix[i][j]);
+            }
+        }
+        
+        // Find the maximum values in each column
+        for(int j = 0; j < cols; j++){
+            for(int i = 0; i < row; i++){
+                maxx[j] = max(maxx[j], matrix[i][j]);
+            }
+        }
+        
+        // Find all lucky numbers
+        vector<int> result;
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < cols; j++){
+                if(matrix[i][j] == minn[i] && matrix[i][j] == maxx[j]){
+                    result.push_back(matrix[i][j]);
+                }
+            }
+        }
+        
+        return result;
+    }
+};
