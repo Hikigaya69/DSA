@@ -1,0 +1,53 @@
+//In the universe Earth C-137, Rick discovered a special form of magnetic force between two balls if they are put in his new invented basket. Rick has n empty baskets, the ith basket is at position[i], Morty has m balls and needs to distribute the balls into the baskets such that the minimum magnetic force between any two balls is maximum.
+//Rick stated that magnetic force between two different balls at positions x and y is |x - y|.
+//Given the integer array position and the integer m. Return the required force.
+//Medium
+
+
+ class Solution {
+public:
+
+    bool isPossible(int force,vector<int> position,int m)
+    {
+       int prev=position[0];
+       int count=1;
+       for(int i=0;i<position.size();i++)
+       {
+        int curr=position[i];
+        if(curr-prev>=force)
+        {
+            count++;
+            prev=curr;
+        }
+        if(count==m)
+        {
+            break;
+        }
+       }
+       return count==m;
+
+    }
+    int maxDistance(vector<int>& position, int m) {
+        int n=position.size();
+        sort(position.begin(),position.end());
+        int minF=1;
+        int maxF=position[n-1]-position[0];
+        int result=0;
+        while(minF<=maxF)
+        {
+            int midF=minF+(maxF-minF)/2;
+
+            if (isPossible(midF,position,m))
+            {
+                result=midF;
+                minF=midF+1;
+            }else{
+                maxF=midF-1;
+            }
+        }
+
+        return result;
+
+
+    }
+};
