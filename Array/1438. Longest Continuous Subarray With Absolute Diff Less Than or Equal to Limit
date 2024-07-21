@@ -1,0 +1,28 @@
+//Given an array of integers nums and an integer limit, return the size of the longest non-empty subarray such that the absolute difference between any two elements of this subarray is less than or equal to limit.
+//Medium 
+//Sliding window
+
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums, int limit) {
+        multiset<int> st;
+        int i=0;
+        int j=0;
+        int n= nums.size();
+        int res=0;
+        while(j<n){
+            st.insert(nums[j]);
+
+            while(*st.rbegin()-*st.begin()>limit){
+                st.erase(st.find(nums[i]));
+                i++;
+            }
+            res=max(res,j-i+1);
+            j++;
+            
+            
+        }
+        return res;
+        
+    }
+};
