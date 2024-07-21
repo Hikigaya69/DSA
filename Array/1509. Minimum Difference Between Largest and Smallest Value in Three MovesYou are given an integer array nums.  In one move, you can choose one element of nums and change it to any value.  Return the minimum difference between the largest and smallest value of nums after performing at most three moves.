@@ -1,0 +1,26 @@
+//Medium
+//You are given an integer array nums.
+//In one move, you can choose one element of nums and change it to any value.
+//Return the minimum difference between the largest and smallest value of nums after performing at most three moves.
+
+class Solution {
+public:
+    int minDifference(vector<int>& nums) {
+        int n=nums.size();
+        int minVal=INT_MAX;
+
+        sort(nums.begin(),nums.end());
+
+        if(n<=4){
+            return 0;
+        }
+
+        minVal=min(minVal,nums[n-4]-nums[0]);
+        minVal=min(minVal,nums[n-1]-nums[3]);
+        minVal=min(minVal,nums[n-2]-nums[2]);
+        minVal=min(minVal,nums[n-3]-nums[1]);
+
+        return minVal;
+        
+    }
+};
