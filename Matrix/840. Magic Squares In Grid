@@ -1,0 +1,69 @@
+//Medium
+//A 3 x 3 magic square is a 3 x 3 grid filled with distinct numbers from 1 to 9 such that each row, column, and both diagonals all have the same sum.
+
+//Given a row x col grid of integers, how many 3 x 3 contiguous magic square subgrids are there?
+
+//Note: while a magic square can only contain numbers from 1 to 9, grid may contain numbers up to 15.
+
+class Solution {
+public:
+
+    bool isMagicGrid(vector<vector<int>>&grid, int r,int c){
+        unordered_set<int>st; //set to maintain unique numbers
+
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                int num=grid[r+i][c+j];  //Calculate and access the data from the starting of the grid 
+                
+                if(num<1 || num>9 || st.count(num)){  //Check for conditions(uniqueness)
+                    return false;
+                }else{
+                    st.insert(num);
+                }
+            }
+        }
+
+        //Row and col Sum
+
+        int rowSum=grid[r][c]+grid[r][c+1]+grid[r][c+2];
+
+        for(int i=0;i<3;i++){
+           if(grid[r+i][c]+grid[r+i][c+1]+grid[r+i][c+2]!=rowSum){   //Each row sum
+            return false;
+           }
+           if(grid[r][c+i]+grid[r+1][c+i]+grid[r+2][c+i] !=rowSum){  //Each col sum
+            return false;   
+           }
+
+        }
+
+        //Diagonal Sum
+
+        if(grid[r][c]+grid[r+1][c+1]+grid[r+2][c+2] !=rowSum){
+            return false;
+        }
+        if(grid[r][c+2]+grid[r+1][c+1]+grid[r+2][c] !=rowSum){ //Antidiagonal sum
+            return false;
+        }
+
+       return true;
+
+    }
+
+    int numMagicSquaresInside(vector<vector<int>>& grid) {
+
+        int rows=grid.size();
+        int cols=grid.size();
+        int count=0;
+
+        for(int r=0;r<=rows-3;r++){
+            for(int c=0;c<=cols-3;c++){
+                if(isMagicGrid(grid,r,c)){
+                    count++;
+                }
+            }
+        }
+        return count;
+        
+    }
+};
