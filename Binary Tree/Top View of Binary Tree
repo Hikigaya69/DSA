@@ -1,0 +1,52 @@
+//Mdeium GeeksforGeeks
+
+
+class Solution
+{
+    public:
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    
+    void find(Node* root, int &l,int &r,int pos){
+        
+        if(!root)
+          return;
+        l=min(pos,l);
+        r=max(pos,r);
+        
+        find(root->left,l,r,pos-1);
+        find(root->right,l,r,pos+1);
+    }
+    
+    void Tview(Node* root,vector<int>&ans,vector<int>&level,int pos,int l)
+    
+    {  if(!root)
+          return;
+        
+        if(level[pos]>l){
+            ans[pos]=root->data;
+            level[pos]=l;
+        }
+        
+        Tview(root->left,ans,level,pos-1,l+1);
+        Tview(root->right,ans,level,pos+1,l+1);
+    }
+    vector<int> topView(Node *root)
+    {
+        //Your code here
+        
+        int l=0;
+        int r=0;
+        
+        
+        find(root,l,r,0);
+        
+        vector<int>ans(r-l+1);
+        vector<int>level(r-l+1,INT_MAX);
+        
+        Tview(root,ans,level,-1*l,0);
+        
+        return ans;
+    }
+
+};
