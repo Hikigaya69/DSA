@@ -1,0 +1,30 @@
+//Hard
+//Not the best approach but easy to understand
+//The distance of a pair of integers a and b is defined as the absolute difference between a and b.
+
+//Given an integer array nums and an integer k, return the kth smallest distance among all the pairs nums[i] and nums[j] where 0 <= i < j < nums.length.
+
+class Solution {
+public:
+    int smallestDistancePair(vector<int>& nums, int k) {
+        int n=nums.size();
+        int maxx= *max_element(nums.begin(),nums.end());
+        vector<int>vec (maxx+1,0);
+
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                int d= abs(nums[i]-nums[j]);
+                vec[d]++;
+            }
+        }
+
+        for(int d=0;d<maxx+1;d++){
+            k-=vec[d];
+
+            if(k<=0){
+                return d;
+            }
+        }
+        return -1;
+    }
+};
