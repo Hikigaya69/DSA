@@ -1,0 +1,40 @@
+//Easy
+//12/09/2024
+//Bit Manipulation is bit tricky
+
+/*You are given a string allowed consisting of distinct characters and an array of strings words. A string is consistent if all characters in the string appear in the string allowed.
+
+Return the number of consistent strings in the array words.
+*/
+
+class Solution {
+public:
+    int countConsistentStrings(string allowed, vector<string>& words) {
+        int count=0;
+        int mask=0;
+
+        for(char &ch:allowed){
+            mask |=(1<<(ch-'a'));
+        }
+        for(string &word:words){
+            bool allCharPresent= true;
+
+            for(char &ch: word){
+                if(((mask >> (ch-'a')) &1 )==0){
+                    allCharPresent=false;
+                
+            }
+
+            }
+            if(allCharPresent){
+             count++;
+           }  
+        
+        } 
+           
+           
+            
+        
+      return count;  
+    }
+};
