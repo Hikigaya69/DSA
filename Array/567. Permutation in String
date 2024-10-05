@@ -1,0 +1,60 @@
+//Medium
+//05/10/2024
+//Sliding window
+
+
+//Given two strings s1 and s2, return true if s2 contains a 
+//permutation
+ //of s1, or false otherwise.
+
+//In other words, return true if one of s1's permutations is the substring of s2.
+
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+
+        int m=s1.length();
+        int n=s2.length();
+
+        if(m>n)
+        {
+            return false;   //length of original string cant be greater than target string (possible hi nahi hai)
+        }
+
+        vector<int>s1_freq (26,0);
+        vector<int>s2_freq(26,0);
+
+        for(char &ch : s1)
+        {
+            s1_freq[ch-'a']++;  //populating frequency is little bit diffrenet in for and while loops
+        }
+        int i=0;
+        int j=0;
+
+        while(j<n)
+        {
+           s2_freq[s2[j]-'a']++;  //populate kar isko s2 ke freqnecy se
+
+           if(j-i+1>m){   //time to move the window (move karrrrrr length zyada hogaya)
+             s2_freq[s2[i]-'a']--; //i ko aage bada aur incriment kar
+             i++;
+
+           }
+
+           if(s1_freq == s2_freq)
+           {
+            return true;
+           }
+           j++;
+        }
+        return false;
+
+
+        
+    }
+};
+
+
+
+/*easy peasy... If u want to check that the permutation exists just go for the frequency occurence of the original string and then
+apply sliding window on the target string and on each iteration compare frequencies;
