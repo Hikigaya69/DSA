@@ -1,0 +1,33 @@
+Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1
+Medium
+Prefix Array
+Unordered map
+9/11/24
+
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+      int sum=0;
+      int max_len=0;
+      unordered_map<int,int> occurence;
+
+      for(int i=0;i<nums.size();i++){
+        sum+=nums[i] == 0 ?  -1 : 1 ;  //taking 0 as -1 and 1 aas +1 to check the balance
+        
+        if(sum==0){
+            max_len=max(max_len,i+1);  //when sum is 0 then the balance is achieved therefore the max length is calculated 
+        }else if(occurence.find(sum) != occurence.end()){  //if there is a registred sum's occurence then there is a subarry which satiesfies the balance excluding the
+                                                           //left most occurence
+            max_len=max(max_len,i-occurence[sum]);
+        }else{
+            occurence[sum]=i;        //if there is no registred occurence of the sum
+        }
+
+        
+
+      }
+
+return max_len;
+        
+    }
+};
